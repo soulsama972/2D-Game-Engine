@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.10)
+
+# define a macro that helps defining an option
+macro(set_flag_option var default docstring)
+    set(${var} ${default} CACHE BOOL ${docstring} FORCE)
+endmacro()
+
+project(dog_vs_cat_game LANGUAGES CXX)
+
+set(LINK_FLAGS -lsfml-window-d -lsfml-system-d -lsfml-graphics-d -lopengl32  -lgdi32 -lwinmm)
+
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DSFML_STATIC)
+target_compile_options(${PROJECT_NAME} PRIVATE -std=c++17)
+target_link_libraries(${PROJECT_NAME} ${LINK_FLAGS})
+
+
+
