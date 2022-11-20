@@ -1,0 +1,1 @@
+add_library(Entity OBJECT entity.h entity.cpp player.h player.cpp)

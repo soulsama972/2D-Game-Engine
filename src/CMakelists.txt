@@ -1,0 +1,18 @@
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_include_directories(${PROJECT_NAME} PRIVATE Entity)
+add_subdirectory(Entity)
+target_link_directories(${PROJECT_NAME}
+    PUBLIC Entity
+)
+concat(LINK_FLAGS "Entity")
+
+
+target_link_libraries(${PROJECT_NAME} ${LINK_FLAGS})
+
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_BINARY_DIR}/${EXENAME}
+    ${CMAKE_SOURCE_DIR}/build/${EXENAME}
+)

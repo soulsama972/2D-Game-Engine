@@ -1,23 +1,30 @@
-#include <SFML/Graphics.hpp>
-#include<SFML/Window.hpp>
+#include"Entity/player.h"
+
+#include<iostream>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
+    sf::RenderWindow window(sf::VideoMode(1920, 800), "SFML works!");
+    sf::Clock clock;
+    Entity::bindRenderWindow(&window);
+    window.setVerticalSyncEnabled(true);
+    Player cat;
     while (window.isOpen())
     {
+        float dt = clock.getElapsedTime().asSeconds();
+        clock.restart();
         sf::Event event;
-        window.setVerticalSyncEnabled(false);
+        int count = 0;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            count++;
         }
         window.clear();
-        window.draw(shape);
+        cat.update(dt);
+        cat.draw();
         window.display();
     }
 
