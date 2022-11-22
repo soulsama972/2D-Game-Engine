@@ -9,15 +9,12 @@ class Entity
 
 public:
     virtual void update(float dt);
-
-    virtual void draw() const;
-
-    static void bindRenderWindow(const sf::RenderWindow* window);
-    static void unBindRenderWindow();
+    virtual void draw(sf::RenderWindow& window) const;
 
 protected:
-    static sf::RenderWindow* window;
+    float xPos, yPos, width, height;
+
 private:
-    
+
 };
 

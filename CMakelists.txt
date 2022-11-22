@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12)
 
 # define a macro that helps defining an option
 macro(set_flag_option var default docString)
@@ -13,16 +13,16 @@ endmacro()
 project(dog_vs_cat_game LANGUAGES CXX)
 
 if(MINGW)
-concat(CMAKE_EXE_LINKER_FLAGS  "-static-libgcc -Wl,-static,--whole-archive -lwinpthread -Wl,--no-whole-archive")
+set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS}  "-static-libgcc -Wl,-static,--whole-archive -lwinpthread -Wl,--no-whole-archive")
 endif()
 
 add_compile_options(-std=c++17 -Wall)
 add_compile_definitions(SFML_STATIC)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(LINK_FLAGS -lsfml-window-d-s -lsfml-system-d-s -lsfml-graphics-d-s)
+    concat(LINK_FLAGS "-lsfml-window-d-s -lsfml-system-d-s -lsfml-graphics-d-s")
 else()
-    set(LINK_FLAGS -lsfml-window-s -lsfml-system-s -lsfml-graphics-s)
+    concat(LINK_FLAGS "-lsfml-window-s -lsfml-system-s -lsfml-graphics-s")
 endif()
 
 if (WIN32)
