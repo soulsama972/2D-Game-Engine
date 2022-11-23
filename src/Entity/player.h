@@ -1,19 +1,15 @@
 #pragma once
 #include"entity.h"
-#include"Animation/spriteAnimation.h"
 
-#include<vector>
-#include<cmath>
 
-constexpr float speed = 300.0f;
-constexpr float MAX_JUMP = 300.0f;
+
+
 class Player : public Entity
 {
 public:
-    Player();
+    Player(sf::Vector2f pos, sf::Vector2f size);
     void update(float dt) override;
     void draw(sf::RenderWindow& window)const override;
-    void setAnimations(std::vector<SpriteAnimation*>& animations);
 
 private:
     void jump(float dt);
@@ -21,10 +17,5 @@ private:
     void fixPos();
 
     sf::Keyboard keyboard;
-    sf::Clock clock;
-    std::vector<SpriteAnimation*> animations;
 
-    float maxJump;
-    int catStatus;
-    int currentAmimation;
 };

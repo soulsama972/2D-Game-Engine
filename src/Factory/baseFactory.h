@@ -38,11 +38,13 @@ protected:
     */
     virtual OBJTYPE* genreateObject(ARGS args) = 0;
 
+    
+    std::vector<OBJTYPE*> getObjects() const;
 
 private:
     int _limit;
     int objCount;
-    std::vector<OBJTYPE*> objs;
+    std::vector<OBJTYPE*> objects;
 };
 
 template<typename OBJTYPE,typename ARGS>
@@ -55,7 +57,7 @@ OBJTYPE* BaseFactory<OBJTYPE,ARGS>::safeGenreateObject(ARGS args)
 
         if(obj)
         {
-            objs.push_back(obj);
+            objects.push_back(obj);
             objCount++;
         }
     }
@@ -68,3 +70,18 @@ void BaseFactory<OBJTYPE,ARGS>::setLimit(int limit)
     _limit = limit;
 }
 
+template<typename OBJTYPE,typename ARGS>
+void BaseFactory<OBJTYPE,ARGS>::destoryAllGenreateObject()
+{
+    for(auto& object: objects)
+        delete object;
+
+    objects.clear();
+}
+
+
+template<typename OBJTYPE,typename ARGS>
+std::vector<OBJTYPE*> BaseFactory<OBJTYPE,ARGS>::getObjects() const
+{
+    return objects;
+}

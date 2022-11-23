@@ -6,15 +6,19 @@
 class SpriteAnimation : public BaseAnimation
 {
 public:
-    SpriteAnimation(sf::Sprite* sprite, int rowCount, int columnCount, float switchTime);
+    SpriteAnimation(sf::Sprite* sprite, int rowCount, int columnCount, float switchTime, bool removeEmptyInfo);
 
     /*
     \param dt delta time
-    \param flip flip the image horiznotal
-
     */
-    void update(float dt,  bool flip);
+    void update(float dt);
 
+
+    /*
+    \param window the sfml window
+    \param pos the position on the screen to display
+    */
+    void draw(sf::RenderWindow& window,const sf::Vector2f& pos, bool flipImg = false);
     inline sf::Sprite* getSprite() const
     {
         return sprite;

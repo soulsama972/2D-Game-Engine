@@ -1,14 +1,11 @@
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_include_directories(${PROJECT_NAME} 
-PRIVATE Entity
-PRIVATE Animation
-PRIVATE Factory
-)
 
-add_subdirectory(Entity)
-add_subdirectory(Factory)
-add_subdirectory(Animation)
+include_directories(BEFORE
+Entity
+Animation
+Factory
+)
 
 target_link_directories(${PROJECT_NAME}
 PRIVATE Animation
@@ -18,6 +15,10 @@ PRIVATE Factory
 concat(LINK_FLAGS "Entity")
 concat(LINK_FLAGS "Factory")
 concat(LINK_FLAGS "Animation")
+
+add_subdirectory(Entity)
+add_subdirectory(Factory)
+add_subdirectory(Animation)
 
 
 

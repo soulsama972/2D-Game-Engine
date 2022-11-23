@@ -1,11 +1,13 @@
 #include"Entity/player.h"
 
-#include"Animation/spriteAnimationFactory.h"
+#include"Animation/spriteAnimationsManager.h"
 
 #include<iostream>
 
-constexpr float VIEW_HEIGHT = 800.0f;
+constexpr float VIEW_HEIGHT = 600.0f;
 constexpr float VIEW_WIDTH = 800.0f;
+
+constexpr float PLAYER_SIZE = 300;
 
 void resizeView(sf::RenderWindow& window)
 {
@@ -15,30 +17,28 @@ void resizeView(sf::RenderWindow& window)
     window.setView(view);
 }
 
+
+
 int main()
 {
     sf::Clock clock;
-    Player player;
-    sf::Texture backgorund,walk,hurt,idle;
-    SpriteAnimationFcatory factory;
+    Player player({0,0}, {PLAYER_SIZE, PLAYER_SIZE});
+    sf::Texture backgorund;
+    std::vector<SpriteAnimationInfo> saInfo;
+    saInfo.push_back(SpriteAnimationInfo("images/Idle.png", "idle", 4, 1, 0.4f));
+    saInfo.push_back(SpriteAnimationInfo("images/Walk.png", "walk", 6, 1, 0.1f));
+    saInfo.push_back(SpriteAnimationInfo("images/Hurt.png", "hurt", 2, 1, 0.1f));
+    SpriteAnimationsManager spriteAnimationsManager(saInfo, "idle", true);
 
     backgorund.loadFromFile("images/background.png");
-    walk.loadFromFile("images/Walk.png");
-    idle.loadFromFile("images/Idle.png");
-    hurt.loadFromFile("images/Hurt.png");
-    
-    std::vector<SpriteAnimation*> animations;
-    animations.push_back(factory.safeGenreateObject(SpriteAnimationArgs(&idle, 4,1, 0.4f)));
-    animations.push_back(factory.safeGenreateObject(SpriteAnimationArgs(&walk, 6,1, 0.4f)));
-    animations.push_back(factory.safeGenreateObject(SpriteAnimationArgs(&hurt, 2,1, 0.4f)));
 
     sf::Sprite b(backgorund);
     b.setScale(VIEW_WIDTH / 1920, VIEW_HEIGHT / 1080);
-    sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(VIEW_WIDTH, VIEW_HEIGHT), "TEST!");
 
-    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(120);
 
-    player.setAnimations(animations);
+    player.setAnimationManager(&spriteAnimationsManager);
 
     while (window.isOpen())
     {
@@ -50,8 +50,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if(event.type == sf::Event::Resized)
-            resizeView(window);
+         //   if(event.type == sf::Event::Resized)
+          //  resizeView(window);
         }
         window.clear();
         window.draw(b);
